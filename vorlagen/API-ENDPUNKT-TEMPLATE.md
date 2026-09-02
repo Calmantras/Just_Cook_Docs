@@ -1,66 +1,42 @@
 # `METHOD /path`
 
-| Feld | Wert |
+| Field | Value |
 |---|---|
-| Status | `IST` / `SOLL` / `VERALTET` |
-| Authentifizierung | öffentlich / Bearer-JWT / Session / Admin |
-| Verantwortlich | Rolle oder Service |
-| Quellen | Backend-View, Serializer, Frontend-Request |
-| Version | API-Version oder `nicht versioniert` |
-| Idempotenz | ja / nein / unbekannt |
+| Status | `CURRENT` / `PLANNED` / `OPEN` / `OUTDATED` |
+| Authentication | public / Bearer JWT / session |
+| Source | View, serializer, or frontend request |
 
-## Zweck
+## Purpose
 
-Kurze fachliche Beschreibung.
+Short description of the endpoint.
 
 ## Request
 
-### Header
-
 ```http
 Content-Type: application/json
-Authorization: Bearer <synthetischer-token>
+Authorization: Bearer <synthetic-token>
 ```
-
-### Query-Parameter
-
-| Name | Typ | Pflicht | Beschreibung |
-|---|---|---|---|
-| `name` | `string` | ja/nein | Beschreibung |
-
-### Body
 
 ```json
 {}
 ```
 
-Feldregeln, Größenlimits, erlaubte Werte und sensible Daten hier beschreiben.
+Describe required fields and important restrictions briefly. Never use real
+tokens or secrets.
 
 ## Response
 
-### Erfolgsfall
-
 ```json
 {}
 ```
 
-### Statuscodes
+List the important success and error status codes.
 
-| Status | Bedeutung | Responsekörper |
-|---|---|---|
-| `200` | Erfolg | Schema |
-| `400` | Eingabefehler | Fehler-Schema |
+## Data Effects
 
-## Berechtigung und Datenwirkung
+Which data is read or changed? Is ownership checked? Is an external service
+called?
 
-Besitzprüfung, Rollen, Tabellenänderung, externe Aufrufe, Nebenwirkungen,
-Aufbewahrung und Rollback.
+## Open Questions
 
-## Fehler, Limits und Observability
-
-Timeouts, Rate-Limits, Retries, Logfelder ohne Geheimnisse, Metriken und
-Benutzerfeedback.
-
-## Testnachweis
-
-Verweise auf Unit-, Integration-, Contract- und E2E-Tests.
+Only include this section when the current contract is not clear.

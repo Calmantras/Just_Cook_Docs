@@ -1,38 +1,23 @@
-# ADR-NNN: Entscheidungstitel
+# Technical Decision Note
 
-| Feld | Wert |
+| Field | Value |
 |---|---|
-| Status | vorgeschlagen / akzeptiert / ersetzt / verworfen |
-| Datum | YYYY-MM-DD |
-| Verantwortlich | Rolle oder Person |
-| Betroffene Systeme | Repositories und Umgebungen |
-| Verwandte Entscheidungen | ADRs oder Einträge aus dem Entscheidungsregister |
+| Date | YYYY-MM-DD |
+| Status | proposed / decided / rejected |
+| Affected areas | Repositories or documents |
 
-## Kontext
+## Question
 
-Welches Problem und welche Randbedingungen liegen vor? Welche Istquellen sind
-maßgeblich?
+What decision is needed and why?
 
-## Entscheidung
+## Decision
 
-Die beschlossene Regel präzise und testbar formulieren.
+Describe the chosen solution in a few sentences.
 
-## Optionen
+## Alternatives
 
-| Option | Vorteile | Nachteile | Bewertung |
-|---|---|---|---|
-| A | ... | ... | ... |
+Mention only the important rejected options and why they were rejected.
 
-## Konsequenzen
+## Consequences
 
-Technische, fachliche, sicherheitsrelevante, betriebliche und
-datenschutzrechtliche Folgen.
-
-## Umsetzung und Nachweis
-
-Betroffene Codebereiche, Migrationsschritte, Tests, Monitoring und
-Dokumente, die aktualisiert werden müssen.
-
-## Neubewertung
-
-Welche Änderung oder welches Datum löst eine erneute Prüfung aus?
+What code or documentation changes follow from this decision?

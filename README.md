@@ -1,70 +1,53 @@
-# Just Cook Dokumentationsplan
+# Just Cook Documentation
 
-Dieser Ordner enthält den Plan für eine zentrale, repositoryübergreifende
-Dokumentation von Just Cook. Er ist zunächst eine Planungs- und Analyseebene,
-nicht die fertige Produktdokumentation.
+Technical documentation for the four Just Cook repositories. The site is built
+from Markdown with [Zensical](https://zensical.org/) and is also intended to be
+read directly on GitHub.
 
-## Warum eine zentrale Dokumentation?
+The documentation is a practical guide for developers and people who operate
+or change the project. It describes the current analyzed state, not an idealized
+architecture. Unverified or conflicting facts are explicitly marked `OPEN`.
 
-Just Cook besteht aktuell aus vier getrennten Repositories:
+## Start here
 
-| Repository | Tatsächliche Rolle |
+Read the [documentation home](docs/README.md), then continue with:
+
+1. [Project overview](docs/01-overview/project-overview.md)
+2. [Prerequisites](docs/02-getting-started/prerequisites.md)
+3. [Local development setup](docs/02-getting-started/local-development-setup.md)
+4. [API overview](docs/07-api/api-overview.md)
+5. [Troubleshooting](docs/02-getting-started/troubleshooting.md)
+
+## Repositories
+
+| Repository | Responsibility |
 |---|---|
-| `Just_Cook_Index` | Statische öffentliche Landingpage, Legal-Seite und 404-Seite |
-| `Just_Cook_Frontend` | Vue-/Ionic-Anwendung, PWA-/Capacitor-Integration und Browser-Client |
-| `Just_Cook_Backend` | Django-/DRF-API für Rezepte, Kategorien, Sharing und KI-Flows |
-| `Just_Cook_Auth` | Express-/Better-Auth-Service für Accounts, Sessions und JWTs |
+| `Just_Cook_Index` | Static public landing and legal pages |
+| `Just_Cook_Frontend` | Vue/Ionic single-page application and browser client |
+| `Just_Cook_Backend` | Django/DRF API for recipes, categories, sharing, and AI features |
+| `Just_Cook_Auth` | Better Auth service for accounts, sessions, OAuth, and JWTs |
 
-Die wichtigsten Verträge verlaufen über Repositorygrenzen hinweg. Dazu gehören
-Domains, Authentifizierung, JWT/JWKS, Rezept- und Kategorieformate, Bildpfade,
-KI-Antworten, Sharing, Deployment und Datenschutz. Die bisher vorhandenen
-Einzeldokumente enthalten dagegen teilweise alte Dateipfade, alte Authentifi-
-zierung und alte API-Formate.
+The four application repositories are independent and remain unchanged by this
+documentation project. Source links in the pages point to their neighboring
+directories using relative paths.
 
-## Einstieg
+## Documentation status
 
-1. `DOKUMENTATIONSPLAN.md` beschreibt Regeln, Ziel und Verantwortungsgrenzen.
-2. `IST-ANALYSE.md` hält den beim Lesen vorgefundenen technischen Stand fest.
-3. `ZIELSTRUKTUR.md` übernimmt die vorgegebene Struktur `01-overview` bis `09-development` und beschreibt jede geplante Dokumentdatei.
-4. `SCHNITTSTELLEN-REGISTER.md` sammelt die aktuellen, noch nicht überall konsistenten Verträge.
-5. `OFFENE-ENTSCHEIDUNGEN.md` listet Entscheidungen, die vor einer verbindlichen Dokumentation geklärt werden müssen.
-6. `UMSETZUNGSPLAN.md` legt die Reihenfolge und Abnahmekriterien fest.
-7. `vorlagen/` enthält Vorlagen für spätere System-, API-, Runbook- und Entscheidungsdokumente.
+The current-state inventory was reviewed on `2026-09-02`. No application or
+documentation build is implied by that review. The local setup and deployment
+pages intentionally remain a structured skeleton where the source state does
+not establish a safe, runnable procedure.
 
-## Analysegrundlage
+## Contributing documentation
 
-Die Analyse wurde am 2. September 2026 aus dem vorhandenen Arbeitsstand
-erstellt. Die vier Repositories sind jeweils eigenständige Git-Repositories;
-der übergeordnete Ordner ist kein gemeinsames Git-Repository.
+- Keep pages short and link to the source of important technical claims.
+- Use `CURRENT`, `PLANNED`, `OPEN`, or `OUTDATED` when the distinction matters.
+- Use synthetic values such as `<example-token>`; never add credentials, tokens,
+  private keys, or real environment values.
+- Update the affected page when an endpoint, environment variable, start command,
+  data shape, authentication flow, or deployment step changes.
+- Do not treat this documentation as a replacement for the source code.
 
-| Repository | Branch | letzter Commit | Arbeitsbaum beim Lesen |
-|---|---|---|---|
-| `Just_Cook_Auth` | `main` | `1d50168` | sauber |
-| `Just_Cook_Backend` | `master` | `220c4fd` | bereits vorhandene Änderungen an `.env`, `requirements.txt`, `token_manager.py`, `settings.py` und ein untracked `.dockerignore` |
-| `Just_Cook_Frontend` | `feat/clickable-empty-recipe-icon` | `9a56425` | sauber |
-| `Just_Cook_Index` | `switch-to-german` | `70ee732` | sauber |
-
-Die vorhandenen Änderungen im Backend wurden nicht verändert, bereinigt oder
-bewertet als eigene Änderungen. Secret-Werte, Tokens und Zugangsdaten werden
-in diesem Ordner absichtlich nicht wiedergegeben.
-
-## Statusmodell
-
-Jedes spätere Dokument muss seinen Status eindeutig tragen:
-
-| Status | Bedeutung |
-|---|---|
-| `IST` | Durch den aktuellen Code oder eine verifizierte Betriebsquelle belegt |
-| `SOLL` | Beschlossene Zielarchitektur oder gewünschtes Verhalten |
-| `OFFEN` | Entscheidung oder Nachweis fehlt |
-| `VERALTET` | Historischer Inhalt, darf nicht als aktueller Vertrag verwendet werden |
-| `RISIKO` | Beobachtung, die vor einem produktiven Betrieb bewertet werden muss |
-
-## Wichtige Abgrenzung
-
-Die geplante Dokumentation darf Marketingaussagen nicht als technische
-Funktionalität ausgeben. Die Landingpage bewirbt beispielsweise OCR, URL-
-Import, Sharing und zukünftige Credits; implementiert werden diese Funktionen
-in anderen Repositories oder teilweise noch gar nicht. Jede Aussage muss daher
-als Produktversprechen, aktueller Codezustand oder geplante Funktion
-gekennzeichnet werden.
+Zensical configuration and navigation are in [`zensical.toml`](zensical.toml).
+The reusable authoring templates remain in [`vorlagen/`](vorlagen/).
+the starting point and mark the unresolved issue as `OPEN`.

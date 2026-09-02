@@ -1,47 +1,30 @@
-# Runbook: Störung oder Betriebsvorgang
+# Short Guide: Operation or Problem
 
-| Feld | Wert |
+| Field | Value |
 |---|---|
-| Status | `SOLL` |
-| Verantwortlich | On-call-Rolle |
-| Risiko | niedrig / mittel / hoch / kritisch |
-| Gültigkeit | Umgebung und Service |
-| Letzte Prüfung | YYYY-MM-DD |
+| Status | `CURRENT` / `PLANNED` |
+| Affected service | Service and environment |
+| Last reviewed | YYYY-MM-DD |
 
-## Zweck und Auslöser
+## When to Use It
 
-Wann wird dieses Runbook verwendet? Welche Symptome oder Alerts lösen es aus?
+Briefly describe the symptom or trigger.
 
-## Voraussetzungen
+## Prerequisites
 
-Berechtigungen, Werkzeuge, sichere Variablennamen und relevante Dashboards.
-Keine echten Zugangsdaten eintragen.
+Required commands, permissions, and variable names. Do not add credentials.
 
-## Sicherheitswarnungen
+## Steps
 
-Auswirkungen auf Benutzer, Daten, Tokens, Migrationen und externe Kosten.
+1. Check the service state and logs.
+2. Narrow down the cause or affected service.
+3. Perform the action.
+4. Verify the result.
 
-## Diagnose
+## Rollback
 
-1. Dienst und Umgebung prüfen.
-2. Healthcheck und relevante Logs ohne Secretwerte prüfen.
-3. Abhängige Dienste und aktuelle Deployments prüfen.
-4. Ursache und Zeitpunkt dokumentieren.
+Include this only when the action changes data or deployment state.
 
-## Maßnahmen
+## Follow-up
 
-Schrittfolge mit erwarteten Ergebnissen. Für jeden destruktiven Schritt muss
-eine Backup- oder Bestätigungsschwelle angegeben werden.
-
-## Verifikation
-
-Welche Requests, Metriken und Nutzerflüsse müssen nach der Maßnahme erfolgreich
-sein?
-
-## Rollback und Eskalation
-
-Rollbackschritte, Abbruchkriterien, Verantwortliche und Eskalationskanal.
-
-## Nachbereitung
-
-Incident-ID, Root Cause, Dokumentationsänderung, Test und dauerhafte Maßnahme.
+What should be improved or documented after a similar problem?

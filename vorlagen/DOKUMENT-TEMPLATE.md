@@ -1,48 +1,30 @@
-# Dokumenttitel
+# Document Title
 
-| Feld | Wert |
+| Field | Value |
 |---|---|
-| Status | `IST` / `SOLL` / `OFFEN` / `VERALTET` |
-| Verantwortlich | Rolle oder Person |
-| Zielgruppe | Lesergruppe |
-| Letzte Prüfung | YYYY-MM-DD, Commit oder Betriebsstand |
-| Quellen | Repositorypfade, Tickets, externe Systeme |
-| Abhängigkeiten | Andere Dokumente |
-| Nächste Prüfung | Datum oder Änderungs-Trigger |
+| Status | `CURRENT` / `PLANNED` / `OPEN` / `OUTDATED` |
+| Last reviewed | YYYY-MM-DD |
+| Sources | Repository paths or other sources |
 
-## Zweck
+## Purpose
 
-Welche Frage beantwortet dieses Dokument? Was gehört ausdrücklich nicht in
-diese Datei?
+What question does this document answer?
 
-## Geltungsbereich
+## Content
 
-Betroffene Komponenten, Umgebungen, Nutzer und Daten.
+Write a short, understandable description. Separate current, planned, and open
+information clearly.
 
-## Iststand
+## Known Problems
 
-Nur belegtes aktuelles Verhalten. Jede wichtige Aussage erhält eine Quelle.
+Only include problems that affect use, development, or deployment.
 
-## Sollstand
+## Further Reading
 
-Nur beschlossene Zielregeln. Offene Entscheidungen werden nicht als Lösung
-formuliert.
+Related documents or issues.
 
-## Fehler und Risiken
+## Change History
 
-Sichtbare Fehlerfälle, Sicherheitsfolgen, Datenschutzfolgen und betriebliche
-Auswirkungen.
-
-## Verifikation
-
-Testfälle, Smoke-Tests, Monitoringnachweise oder manuelle Prüfschritte.
-
-## Offene Punkte
-
-Verweise auf `OFFENE-ENTSCHEIDUNGEN.md` oder ADRs.
-
-## Änderungsverlauf
-
-| Datum | Änderung | Verantwortlich |
-|---|---|---|
-| YYYY-MM-DD | Erstfassung | Name/Rolle |
+| Date | Change |
+|---|---|
+| YYYY-MM-DD | Initial version |
