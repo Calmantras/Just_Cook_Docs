@@ -53,9 +53,9 @@ teilweise `HttpResponse` weiter, ohne `response.status` zu prüfen.
 
 | Methode | Pfad | Auth | Aktueller Request | Aktuelle Antwort | Quellen / Befund |
 |---|---|---|---|---|---|
-| `POST` | `/api/getocrtext/` | JWT | `{ "image": "<base64>" }` | `{ "ocrtext": "<String>" }`, `200` | Backend `views.py:167-180`; Bild wird zu Thumbor und Cerebras gesendet |
+| `POST` | `/api/getocrtext/` | JWT | `{ "image": "<base64>" }` | `{ "ocrtext": "<String>" }`, `200` | Backend `view_recipe/views.py`, `util/ai/image_to_recipe.py`; Bild wird zu Thumbor und Groq/Qwen 3.8 gesendet |
 | `POST` | `/api/ocrtorecipe/` | JWT | `{ "ocr": "<Text>" }` | roher String, `201` | Backend `views.py:147-164`; Prompt fordert XML, Frontend parst JSON |
-| `POST` | `/api/webtorecipe/` | JWT | `{ "website": "<URL>" }` | `{ "ocrtext": "<JSON-String>" }`, `200` | Backend `views.py:182-193`; Groq nutzt `visit_website` |
+| `POST` | `/api/webtorecipe/` | JWT | `{ "website": "<URL>" }` | `{ "ocrtext": "<JSON-String>" }`, `200` | Backend `util/ai/web_to_recipe.py`; Exa Contents liest genau die übergebene URL, Groq/Qwen 3.8 erzeugt das JSON; `EXA_API_KEY` muss gesetzt sein |
 | `POST` | `/api/getrecipe/` | JWT | `{ "id": 123 }` | `{ id, user, title, body, image, categories }`, `200` | Backend `views.py:16-31`; Frontend erwartet aktuell `recipemd`/`category` |
 | `PUT` | `/api/editrecipe/` | JWT | `{ "id", "title", "body", "image", "categories" }` | Serializerdaten, `200`; ungültig derzeit `404` | Backend `views.py:34-71`; Existenz und Fehlersemantik prüfen |
 | `DELETE` | `/api/deleterecipe/` | JWT | `{ "id": 123 }` | `{ "success": true }`, `200` | Backend `views.py:113-129`; auch bei null gelöschten Datensätzen möglich |

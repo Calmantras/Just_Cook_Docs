@@ -4,7 +4,8 @@
 |---|---|
 | Status | `IST`, statische Analyse |
 | Prüfdatum | 2026-09-02 |
-| Änderungsumfang | Keine Änderungen an den vier Quell-Repositories |
+| KI-Integration aktualisiert | 2026-09-24, statische Prüfung des Backend-Fix-Branches |
+| Änderungsumfang | Ursprüngliche Analyse ohne Quelländerungen; KI-Nachtrag zur Backend-Migration |
 | Secret-Behandlung | Werte absichtlich nicht übernommen |
 | Teststatus | Kein vollständiger Build, kein Deployment und kein End-to-End-Test ausgeführt |
 
@@ -23,8 +24,8 @@ flowchart LR
     API --> Auth
     API --> DomainDB[(PostgreSQL / Django Tabellen)]
     API --> Thumbor[Thumbor / Bildupload]
-    API --> Cerebras[Cerebras OCR und Transformation]
-    API --> Groq[Groq Website-Import]
+    API --> Groq[Groq Qwen 3.8 OCR und Rezeptverarbeitung]
+    API --> Exa[Exa Abruf von Rezept-Webseiten]
     Share[Öffentlicher Share-Link] --> API
 ```
 
@@ -116,9 +117,11 @@ Die Modelle sind nicht relational mit Better-Auth-Benutzern verbunden:
 - `RecipeShare`: Snapshot aus Secret, Benutzer, Titel, Body und Bild
 
 Das Backend bietet Rezept-CRUD, Kategorienverwaltung, OCR, OCR-zu-Rezept,
-Website-Import und öffentliches Sharing. Bilduploads gehen an Thumbor; OCR
-und Texttransformation werden über Cerebras ausgeführt, Website-Import über
-Groq mit aktiviertem `visit_website`-Tool.
+Website-Import und öffentliches Sharing. Bilduploads gehen an Thumbor; OCR,
+Texttransformation, Rezeptoptimierung und die Verarbeitung von Webseiteninhalten
+nutzen Groq mit `qwen/qwen3.8-27b`. Exa liest die angegebene Rezept-URL über
+die Contents-API aus; dazu benötigt das Backend `EXA_API_KEY` als
+Umgebungsvariable. Das Exa-SDK ist in den Backend-Abhängigkeiten enthalten.
 
 Primäre Quellen:
 
@@ -199,18 +202,18 @@ Die Liste verwendet `body` und `categories`; `getRecipe()` im Frontend liest
 ### 4.3 OCR und Website-Import
 
 Beim Bildscan sendet das Frontend Base64 an `/api/getocrtext/`. Das Backend
-lädt das Bild zu Thumbor und sendet es zusätzlich als Data-URL an Cerebras.
+lädt das Bild zu Thumbor und sendet es zusätzlich als Data-URL an Groq.
 Die OCR-Antwort wird unter `ocrtext` als String verpackt. Das Frontend parst
 darin JSON.
 
 Beim Website-Import sendet das Frontend eine syntaktisch geprüfte URL an
-`/api/webtorecipe/`. Das Backend verwendet Groq mit Website-Tool und gibt
-ebenfalls ein Feld `ocrtext` zurück. Die Anwendung kennt dabei keinen
-erkennbaren serverseitigen SSRF-Schutz oder ein verbindliches Domain-
-Allowlist-Konzept.
+`/api/webtorecipe/`. Das Backend liest die übergebene URL über Exas Contents-API
+aus und gibt den Seitentext an Groq/Qwen 3.8 weiter. Die Antwort bleibt ein
+JSON-String im Feld `ocrtext`. Das Backend ruft die URL nicht selbst ab;
+eine eigene Prüfung privater Ziele oder Domain-Allowlist ist nicht implementiert.
 
 Der OCR-Prompt und die Antwortverträge sind nicht durchgehend konsistent:
-Das aktuelle Cerebras-Schema kennt JSON-Felder `recipe_title`, `ingredients`
+Das aktuelle Groq-Schema kennt JSON-Felder `recipe_title`, `ingredients`
 und `instructions`, der Transformationsprompt fordert jedoch XML-Tags.
 
 ### 4.4 Sharing
