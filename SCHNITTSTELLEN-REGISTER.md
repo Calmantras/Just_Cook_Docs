@@ -60,10 +60,17 @@ teilweise `HttpResponse` weiter, ohne `response.status` zu prüfen.
 | `PUT` | `/api/editrecipe/` | JWT | `{ "id", "title", "body", "image", "categories" }` | Serializerdaten, `200`; ungültig derzeit `404` | Backend `views.py:34-71`; Existenz und Fehlersemantik prüfen |
 | `DELETE` | `/api/deleterecipe/` | JWT | `{ "id": 123 }` | `{ "success": true }`, `200` | Backend `views.py:113-129`; auch bei null gelöschten Datensätzen möglich |
 | `GET` | `/api/getrecipes/` | JWT | kein Body | Array aus Rezeptobjekten, `200` | Backend `views.py:132-144`; Frontend mappt `body` und `categories` |
-| `POST` | `/api/postrecipe/` | JWT | `{ "title", "body", "image", "categories" }` | Rezeptobjekt mit neuer `id`, `201` | Backend `views.py:74-110`; Bildupload vor DB-Speicherung |
+| `POST` | `/api/postrecipe/` | JWT | `{ "title", "body", "image", "categories" }`, optional `share_secret` | Rezeptobjekt mit neuer `id`, `201` | Optionales `share_secret` übernimmt das Bild des öffentlichen Share-Snapshots; ohne Secret wird `image` verarbeitet |
 | `POST` | `/api/sharerecipe/` | JWT | `{ "id": 123 }` | `{ "success": "<share-secret>" }`, `200` | Backend `views.py:195-224`; erzeugt dauerhaften Snapshot |
 | `GET` | `/api/getsharerecipe/` | öffentlich | `?secret=<secret>` | HTML-Seite | Backend `views.py:226-243`; Route ist keine `api_view`-Funktion |
 | `GET` | `/api/getsharerecipe/data/` | öffentlich | `?secret=<secret>` | `{ "title", "body", "image" }`, `200` | Backend `views.py:246-266`; Secret ist Bearer-Zugriff |
+
+Für den authentifizierten Import ruft das Frontend zunächst
+`GET /api/getsharerecipe/data/?secret=...` auf und öffnet das geteilte Rezept
+zur Bearbeitung. Beim Speichern sendet es `share_secret` an
+`POST /api/postrecipe/`, solange das geteilte Bild beibehalten wurde. Das
+Backend verwendet dann das Bild des Snapshots statt eines erneuten Uploads.
+Bei einem ungültigen Share-Secret liefert der Speichervorgang `404`.
 
 ## 3. Kategorie-Endpunkte
 
@@ -195,6 +202,8 @@ MIME-Typ, Größe, führende Slashes, Löschung und Fehlerfälle festlegen.
 | Backend-Trust | JWKS unter `<BETTER_AUTH_URL>/api/auth/jwks` | fester Issuer, Audience, Algorithmen, Claims und Key-Cache |
 | Logout | Session und lokaler Token werden beendet/entfernt | Verhalten bereits ausgestellter JWTs und Cache-Löschung |
 | Registrierung | E-Mail-Verifikation im Auth-Service erforderlich | ungeschützte Zielseite, Resend und Social-Login-Regel |
+| Share-Import | Das Frontend hält `saveshared` für Registrierung und Login bis zu sieben Tage in einem First-Party-Cookie; `/recipes` übernimmt das Secret und öffnet den Rezepteditor | Gültigkeitsdauer und Verhalten bei unterbrochener Anmeldung |
+| Rezeptsprache | Die Einstellungen schreiben `recipe_language` (`de` oder `en`) über `/api/userdata/`; die Erstwahl erfolgt nach der Anmeldung | Weitere Sprachcodes und Fallbacks |
 | CORS | Auth aus `TRUSTED_ORIGINS`, Backend mit statischen Origins | getrennte Werte pro Umgebung und keine Produktions-/Testvermischung |
 
 ## 7. Contract-Test-Matrix
